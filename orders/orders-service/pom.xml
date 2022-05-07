@@ -4,29 +4,27 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>bookstore</artifactId>
+        <artifactId>orders</artifactId>
         <groupId>com.getir</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>bookstore-service</artifactId>
+    <artifactId>orders-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>bookstore-service</name>
+    <name>orders-service</name>
+    <description>orders-service</description>
 
     <properties>
+        <image.path>registry.hub.docker.com/readingisgood/orders</image.path>
         <java.version>11</java.version>
-        <image.path>registry.hub.docker.com/readingisgood/bookstore</image.path>
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
     </dependencies>
 
