@@ -2,52 +2,33 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.7</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <artifactId>reading-is-good</artifactId>
+        <groupId>com.getir</groupId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>bookstore-gateway</module>
-    </modules>
-
-    <groupId>com.getir</groupId>
-    <artifactId>reading-is-good</artifactId>
+    <artifactId>bookstore-gateway</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>reading-is-good</name>
+    <name>reading-is-good-gateway</name>
 
     <properties>
         <java.version>11</java.version>
-        <spring.version>2.6.7</spring.version>
+        <image.path>registry.hub.docker.com/readingisgood/gateway</image.path>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.getir</groupId>
-                <artifactId>gateway</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <plugins>
@@ -60,6 +41,11 @@
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>3.2.1</version>
+                <configuration>
+                    <to>
+                        <image>${image.path}</image>
+                    </to>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>install</phase>
