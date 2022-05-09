@@ -4,5 +4,5 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://readingisgood:password123@localhost:27017/admin
+      uri: mongodb://readingisgood:4ZJPB$qf5lS3@localhost:27017/admin
       database: users

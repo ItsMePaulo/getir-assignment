@@ -27,5 +27,15 @@ services:
     networks:
       - reading-is-good-network
 
+  mongo-db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - reading-is-good-network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: readingisgood
+      MONGO_INITDB_ROOT_PASSWORD: 4ZJPB$qf5lS3
+
 networks:
   reading-is-good-network: {}
