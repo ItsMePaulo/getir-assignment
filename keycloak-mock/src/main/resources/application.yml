@@ -6,3 +6,4 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017
       database: users
+      auto-index-creation: true

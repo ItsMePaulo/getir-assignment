@@ -28,6 +28,7 @@
         <java.version>11</java.version>
         <spring.version>2.6.7</spring.version>
         <spring-cloud.version>2021.0.2</spring-cloud.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
     </properties>
 
     <dependencies>
