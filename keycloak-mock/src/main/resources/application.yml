@@ -1,2 +1,8 @@
 server:
   port: 5000
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://readingisgood:password123@localhost:27017/admin
+      database: users
