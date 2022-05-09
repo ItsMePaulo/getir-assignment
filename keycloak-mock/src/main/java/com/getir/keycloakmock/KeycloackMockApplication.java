@@ -9,5 +9,4 @@ public class KeycloackMockApplication {
     public static void main(String[] args) {
         SpringApplication.run(KeycloackMockApplication.class, args);
     }
-
 }

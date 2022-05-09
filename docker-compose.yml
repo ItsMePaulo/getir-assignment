@@ -33,9 +33,11 @@ services:
       - "27017:27017"
     networks:
       - reading-is-good-network
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: readingisgood
-      MONGO_INITDB_ROOT_PASSWORD: 4ZJPB$qf5lS3
+    volumes:
+      - db-data:/data/db
 
 networks:
   reading-is-good-network: {}
+
+volumes:
+  db-data: {}
