@@ -1,13 +1,12 @@
 package com.getir.bookstoreservice.service;
 
+import com.getir.bookstoreservice.documents.Book;
 import com.getir.bookstoreservice.exception.MissingBookException;
 import com.getir.bookstoreservice.mapper.BookMapper;
 import com.getir.bookstoreservice.model.BookDto;
 import com.getir.bookstoreservice.model.BookStockDto;
 import com.getir.bookstoreservice.repository.BookRepository;
-import com.getir.common.exceptions.DuplicateUniqueKeyException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,18 +31,31 @@ public class BookStoreService {
     }
 
     public BookDto updateBookStock(String isbn, BookStockDto updateDto) {
-        var book = bookRepository.findById(isbn).orElseThrow(() ->
-                new MissingBookException(isbn)
-        );
+        var book = fetchBookByISBN(isbn);
 
         book.setStock(updateDto.performMappingMethod(book.getStock()));
-
         var newBook = bookRepository.save(book);
 
         return bookMapper.mapBookToBookDto(newBook);
     }
 
+    public List<BookDto> fetchAllBooks() {
+        return bookMapper.mapAllBooksToDtos(bookRepository.findAll());
+    }
+
+    public BookDto fetchBook(String isbn) {
+        var book = fetchBookByISBN(isbn);
+
+        return bookMapper.mapBookToBookDto(book);
+    }
+
     public void deleteBook(String isbn) {
         bookRepository.deleteById(isbn);
+    }
+
+    private Book fetchBookByISBN(String isbn) {
+        return bookRepository.findById(isbn).orElseThrow(() ->
+                new MissingBookException(isbn)
+        );
     }
 }

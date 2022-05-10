@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -44,19 +45,7 @@ public class BookControllerTest {
 
     @Test
     void shouldCreateBatchBooks() throws Exception {
-        var books = List.of(
-                bookFactory.apply("12345", "Harry Potter"),
-                bookFactory.apply("67879", "The Golden Compass")
-        );
-
-        var booksAsJsonString = mapper.writeValueAsString(books);
-
-        // create books
-        mockMvc.perform(post("/books/batch")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(booksAsJsonString)
-                ).andExpect(status().isOk())
-                .andExpect(content().json(booksAsJsonString));
+        var books = createMultipleBooks();
 
         // delete all books
         for (BookDto book : books) {
@@ -103,14 +92,42 @@ public class BookControllerTest {
     }
 
     @Test
+    void shouldFetchAllBooks() throws Exception {
+        var books = createMultipleBooks();
+
+        mockMvc.perform(get("/books")
+                ).andExpect(status().isOk())
+                .andExpect(content().json(mapper.writeValueAsString(books)));
+
+        // delete all books
+        for (BookDto book : books) {
+            deleteBook(book.getIsbn());
+        }
+    }
+
+    @Test
+    void shouldFetchBook() throws Exception {
+        var book = createBook();
+
+        mockMvc.perform(get(String.format("/books/%s", book.getIsbn()))
+                ).andExpect(status().isOk())
+                .andExpect(content().json(mapper.writeValueAsString(book)));
+
+        deleteBook(book.getIsbn());
+    }
+
+    @Test
     void shouldReturnBookNotFound() throws Exception {
         var bookStockDto = new BookStockDto(BookStockMethod.SUBTRACT, 10);
         var bookStockAsString = mapper.writeValueAsString(bookStockDto);
 
         mockMvc.perform(patch("/books/12345")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(bookStockAsString)
-                ).andExpect(status().isNotFound());
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(bookStockAsString)
+        ).andExpect(status().isNotFound());
+
+        mockMvc.perform(get("/books/12345"))
+                .andExpect(status().isNotFound());
     }
 
     private BookDto createBook() throws Exception {
@@ -125,6 +142,24 @@ public class BookControllerTest {
                 .andExpect(content().json(bookAsJsonString));
 
         return bookDto;
+    }
+
+    private List<BookDto> createMultipleBooks() throws Exception {
+        var books = List.of(
+                bookFactory.apply("12345", "Harry Potter"),
+                bookFactory.apply("67879", "The Golden Compass")
+        );
+
+        var booksAsJsonString = mapper.writeValueAsString(books);
+
+        // create books
+        mockMvc.perform(post("/books/batch")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(booksAsJsonString)
+                ).andExpect(status().isOk())
+                .andExpect(content().json(booksAsJsonString));
+
+        return books;
     }
 
     private void deleteBook(String isbn) throws Exception {

@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +47,20 @@ public class BookController {
         log.info("Updating stock for book: {}", isbn);
 
         return ResponseEntity.ok(bookStoreService.updateBookStock(isbn, updateDto));
+    }
+
+    @GetMapping
+    ResponseEntity<List<BookDto>> getAllBooks() {
+        log.info("Fetching all books");
+
+        return ResponseEntity.ok(bookStoreService.fetchAllBooks());
+    }
+
+    @GetMapping("/{bookId}")
+    ResponseEntity<BookDto> fetchBook(@PathVariable("bookId") String bookId) {
+        log.info("Fetching book: {}", bookId);
+
+        return ResponseEntity.ok(bookStoreService.fetchBook(bookId));
     }
 
     @DeleteMapping(value = "/{bookId}")
