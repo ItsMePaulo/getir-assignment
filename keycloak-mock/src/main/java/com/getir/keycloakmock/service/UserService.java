@@ -1,7 +1,7 @@
 package com.getir.keycloakmock.service;
 
+import com.getir.common.exceptions.DuplicateUniqueKeyException;
 import com.getir.keycloakmock.document.User;
-import com.getir.keycloakmock.exception.DuplicateUserException;
 import com.getir.keycloakmock.exception.MissingUserException;
 import com.getir.keycloakmock.mapper.UserMapper;
 import com.getir.keycloakmock.model.UserDto;
@@ -29,7 +29,7 @@ public class UserService {
         try {
             savedUser = userRepository.save(result);
         } catch (DuplicateKeyException e) {
-            throw new DuplicateUserException("Could not create user, user with same username or email already exists");
+            throw new DuplicateUniqueKeyException("Could not create user, user with same username or email already exists");
         }
 
         return userMapper.mapUserToToken(savedUser);
