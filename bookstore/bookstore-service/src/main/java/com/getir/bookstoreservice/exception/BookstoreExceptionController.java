@@ -1,4 +1,4 @@
-package com.getir.keycloakmock.exception;
+package com.getir.bookstoreservice.exception;
 
 import com.getir.common.exceptions.DuplicateUniqueKeyException;
 import com.getir.common.models.ErrorResponse;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class ExceptionHandlerController {
+public class BookstoreExceptionController {
 
     @ExceptionHandler(DuplicateUniqueKeyException.class)
     ResponseEntity<ErrorResponse> handleDuplicateKeyException(DuplicateUniqueKeyException e) {
@@ -16,8 +16,8 @@ public class ExceptionHandlerController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e.getMessage()));
     }
 
-    @ExceptionHandler(MissingUserException.class)
-    ResponseEntity<ErrorResponse> handleMissingUserException(MissingUserException e) {
+    @ExceptionHandler(MissingBookException.class)
+    ResponseEntity<ErrorResponse> handleMissingBookException(MissingBookException e) {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e.getMessage()));
     }

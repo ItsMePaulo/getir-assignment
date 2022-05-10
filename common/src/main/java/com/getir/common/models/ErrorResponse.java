@@ -1,4 +1,4 @@
-package com.getir.keycloakmock.model;
+package com.getir.common.models;
 
 import lombok.Value;
 
