@@ -1,7 +1,8 @@
 package com.getir.bookstoreservice.controller;
 
-import com.getir.bookstoreservice.model.BookDto;
-import com.getir.bookstoreservice.model.BookStockDto;
+import com.getir.bookstoreapi.clients.BookstoreClient;
+import com.getir.bookstoreapi.model.BookDto;
+import com.getir.bookstoreapi.model.BookStockDto;
 import com.getir.bookstoreservice.service.BookStoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,47 +25,47 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/books")
-public class BookController {
+public class BookController implements BookstoreClient {
 
     private final BookStoreService bookStoreService;
 
     @RequestMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, method = {RequestMethod.POST, RequestMethod.PUT})
-    ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDto) {
+    public ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDto) {
         log.info("Adding/Updating new book: {} to warehouse", bookDto.getIsbn());
 
         return ResponseEntity.ok(bookStoreService.addBook(bookDto));
     }
 
     @PostMapping(value = "/batch", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<List<BookDto>> createBatchBook(@RequestBody List<BookDto> bookDto) {
+    public ResponseEntity<List<BookDto>> createBatchBook(@RequestBody List<BookDto> bookDto) {
         log.info("Adding books {} to warehouse", bookDto.stream().map(BookDto::getIsbn).collect(Collectors.toList()));
 
         return ResponseEntity.ok(bookStoreService.addBooks(bookDto));
     }
 
     @PatchMapping(value = "/{bookId}", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<BookDto> updateBookStock(@PathVariable("bookId") String isbn, @RequestBody BookStockDto updateDto) {
+    public ResponseEntity<BookDto> updateBookStock(@PathVariable("bookId") String isbn, @RequestBody BookStockDto updateDto) {
         log.info("Updating stock for book: {}", isbn);
 
         return ResponseEntity.ok(bookStoreService.updateBookStock(isbn, updateDto));
     }
 
     @GetMapping
-    ResponseEntity<List<BookDto>> getAllBooks() {
+    public ResponseEntity<List<BookDto>> getAllBooks() {
         log.info("Fetching all books");
 
         return ResponseEntity.ok(bookStoreService.fetchAllBooks());
     }
 
     @GetMapping("/{bookId}")
-    ResponseEntity<BookDto> fetchBook(@PathVariable("bookId") String bookId) {
+    public ResponseEntity<BookDto> fetchBook(@PathVariable("bookId") String bookId) {
         log.info("Fetching book: {}", bookId);
 
         return ResponseEntity.ok(bookStoreService.fetchBook(bookId));
     }
 
     @DeleteMapping(value = "/{bookId}")
-    ResponseEntity<String> deleteBook(@PathVariable("bookId") String isbn) {
+    public ResponseEntity<String> deleteBook(@PathVariable("bookId") String isbn) {
         log.info("Deleting book: {}", isbn);
 
         bookStoreService.deleteBook(isbn);

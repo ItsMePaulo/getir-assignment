@@ -1,7 +1,8 @@
 package com.getir.bookstoreservice.controller;
 
-import com.getir.bookstoreservice.model.UserCartDto;
-import com.getir.bookstoreservice.model.UserCartResponseDto;
+import com.getir.bookstoreapi.clients.CartClient;
+import com.getir.bookstoreapi.model.UserCartDto;
+import com.getir.bookstoreapi.model.UserCartResponseDto;
 import com.getir.bookstoreservice.service.UserCartService;
 import com.getir.ordersapi.model.AddressDto;
 import com.getir.ordersapi.model.OrdersDto;
@@ -24,26 +25,26 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/carts")
-public class CartController {
+public class CartController implements CartClient {
 
     private final UserCartService userCartService;
 
     @RequestMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, method = {RequestMethod.POST, RequestMethod.PUT})
-    ResponseEntity<UserCartResponseDto> createUserCart(@RequestBody @Valid UserCartDto userCartDto) {
+    public ResponseEntity<UserCartResponseDto> createUserCart(@RequestBody @Valid UserCartDto userCartDto) {
         log.info("Adding/Updating a user cart for user: {}", userCartDto.getUserId());
 
         return ResponseEntity.ok(userCartService.addUserCart(userCartDto));
     }
 
     @GetMapping(value = "/{cartId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<UserCartResponseDto> fetchUserCart(@PathVariable("cartId") UUID cartId) {
+    public ResponseEntity<UserCartResponseDto> fetchUserCart(@PathVariable("cartId") UUID cartId) {
         log.info("Fetching user cart: {}", cartId);
 
         return ResponseEntity.ok(userCartService.fetchUserCartDto(cartId));
     }
 
     @PostMapping(value = "/checkout/{cartId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<OrdersDto> checkout(@PathVariable("cartId") UUID cartId, @RequestBody AddressDto addressDto) {
+    public ResponseEntity<OrdersDto> checkout(@PathVariable("cartId") UUID cartId, @RequestBody AddressDto addressDto) {
         log.info("Creating order from cart for user: {}", cartId);
 
         return ResponseEntity.ok(userCartService.checkoutCart(cartId, addressDto));

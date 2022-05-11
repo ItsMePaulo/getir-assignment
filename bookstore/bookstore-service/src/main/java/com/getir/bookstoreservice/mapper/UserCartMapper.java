@@ -1,9 +1,8 @@
 package com.getir.bookstoreservice.mapper;
 
-import com.getir.bookstoreservice.documents.BookCartItem;
+import com.getir.bookstoreapi.model.BookCartItem;
+import com.getir.bookstoreapi.model.UserCartDto;
 import com.getir.bookstoreservice.documents.UserCart;
-import com.getir.bookstoreservice.model.UserCartDto;
-import com.getir.bookstoreservice.model.UserCartResponseDto;
 import com.getir.ordersapi.model.AddressDto;
 import com.getir.ordersapi.model.OrdersDto;
 import com.getir.ordersapi.model.ProductItemDto;

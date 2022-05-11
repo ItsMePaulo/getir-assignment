@@ -1,15 +1,15 @@
 package com.getir.bookstoreservice.service;
 
+import com.getir.bookstoreapi.model.BookCartItem;
 import com.getir.bookstoreservice.documents.Book;
-import com.getir.bookstoreservice.documents.BookCartItem;
 import com.getir.bookstoreservice.documents.UserCart;
 import com.getir.bookstoreservice.exception.BooksOutOfStockException;
 import com.getir.bookstoreservice.exception.CouldNotCreateOrderException;
 import com.getir.bookstoreservice.exception.MissingBookException;
 import com.getir.bookstoreservice.exception.MissingCartException;
 import com.getir.bookstoreservice.mapper.UserCartMapper;
-import com.getir.bookstoreservice.model.UserCartDto;
-import com.getir.bookstoreservice.model.UserCartResponseDto;
+import com.getir.bookstoreapi.model.UserCartDto;
+import com.getir.bookstoreapi.model.UserCartResponseDto;
 import com.getir.bookstoreservice.repository.BookRepository;
 import com.getir.bookstoreservice.repository.UserCartRepository;
 import com.getir.ordersapi.clients.OrdersClient;
@@ -85,7 +85,7 @@ public class UserCartService {
             }
         }
 
-        throw new BooksOutOfStockException(cart.getBooks());
+        throw new BooksOutOfStockException(cartId);
     }
 
     private void clearCartItems(UserCart cart) {

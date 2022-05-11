@@ -1,4 +1,4 @@
-package com.getir.bookstoreservice.model;
+package com.getir.bookstoreapi.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,10 +1,10 @@
 package com.getir.bookstoreservice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.getir.bookstoreservice.documents.BookCartItem;
-import com.getir.bookstoreservice.model.BookDto;
-import com.getir.bookstoreservice.model.UserCartDto;
-import com.getir.bookstoreservice.model.UserCartResponseDto;
+import com.getir.bookstoreapi.model.BookCartItem;
+import com.getir.bookstoreapi.model.BookDto;
+import com.getir.bookstoreapi.model.UserCartDto;
+import com.getir.bookstoreapi.model.UserCartResponseDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

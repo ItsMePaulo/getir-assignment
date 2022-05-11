@@ -1,7 +1,7 @@
 package com.getir.bookstoreservice.mapper;
 
 import com.getir.bookstoreservice.documents.Book;
-import com.getir.bookstoreservice.model.BookDto;
+import com.getir.bookstoreapi.model.BookDto;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

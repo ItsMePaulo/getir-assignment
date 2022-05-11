@@ -1,5 +1,6 @@
 package com.getir.bookstoreservice.documents;
 
+import com.getir.bookstoreapi.model.BookCartItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,8 +1,6 @@
-package com.getir.bookstoreservice.model;
+package com.getir.bookstoreapi.model;
 
 import lombok.Value;
-
-import java.util.List;
 
 @Value
 public class UserCartResponseDto {
