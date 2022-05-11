@@ -65,7 +65,7 @@ public class BookController {
 
     @DeleteMapping(value = "/{bookId}")
     ResponseEntity<String> deleteBook(@PathVariable("bookId") String isbn) {
-        log.info("Updating stock for book: {}", isbn);
+        log.info("Deleting book: {}", isbn);
 
         bookStoreService.deleteBook(isbn);
         return ResponseEntity.ok(String.format("Deleted book: %s", isbn));
