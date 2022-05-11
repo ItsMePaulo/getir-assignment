@@ -14,6 +14,7 @@ services:
       - reading-is-good-network
     environment:
       spring.data.mongodb.uri: mongodb://mongo-db:27017
+      orders.url: orders:8002/orders
 
   orders:
     image: readingisgood/orders:latest

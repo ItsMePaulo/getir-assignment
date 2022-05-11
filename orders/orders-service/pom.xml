@@ -73,6 +73,11 @@
                     <to>
                         <image>${image.path}</image>
                     </to>
+                    <container>
+                        <ports>
+                            <port>8002</port>
+                        </ports>
+                    </container>
                 </configuration>
                 <executions>
                     <execution>
