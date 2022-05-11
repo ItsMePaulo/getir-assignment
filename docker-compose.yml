@@ -12,6 +12,8 @@ services:
       - "8001:8001"
     networks:
       - reading-is-good-network
+    environment:
+      spring.data.mongodb.uri: mongodb://mongo-db:27017
 
   orders:
     image: readingisgood/orders:latest
@@ -19,6 +21,8 @@ services:
       - "8002:8002"
     networks:
       - reading-is-good-network
+    environment:
+      spring.data.mongodb.uri: mongodb://mongo-db:27017
 
   keycloak-mock:
     image: readingisgood/keycloack-mock:latest
@@ -26,6 +30,8 @@ services:
       - "5000:5000"
     networks:
       - reading-is-good-network
+    environment:
+      spring.data.mongodb.uri: mongodb://mongo-db:27017
 
   mongo-db:
     image: mongo
