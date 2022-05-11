@@ -9,6 +9,7 @@ import com.getir.ordersservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -28,6 +29,7 @@ public class OrderService {
         var order = fetchOrderById(id);
 
         order.setStatus(orderStatus);
+        order.setLastUpdatedAt(LocalDateTime.now());
         var newOrder = orderRepository.save(order);
 
         return ordersMapper.mapOrderToOrdersDto(newOrder);

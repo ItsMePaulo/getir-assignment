@@ -1,9 +1,9 @@
 server:
   port: 8002
 
-#spring:
-#  data:
-#    mongodb:
-#      uri: mongodb://localhost:27017
-#      database: users
-#      auto-index-creation: true
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: orders
+      auto-index-creation: true
