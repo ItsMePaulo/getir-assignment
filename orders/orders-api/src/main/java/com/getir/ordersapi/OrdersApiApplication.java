@@ -1,13 +1,13 @@
 package com.getir.ordersapi;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.cloud.openfeign.FeignAutoConfiguration;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
-@SpringBootApplication
+@EnableFeignClients
+@Configuration
+@Import(FeignAutoConfiguration.class)
 public class OrdersApiApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(OrdersApiApplication.class, args);
-    }
 
 }

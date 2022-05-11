@@ -1,8 +1,10 @@
 package com.getir.ordersservice.controller;
 
+import com.getir.ordersapi.clients.OrdersClient;
+import com.getir.ordersapi.model.ProductItemDto;
 import com.getir.ordersservice.documents.ProductItem;
-import com.getir.ordersservice.model.OrderStatus;
-import com.getir.ordersservice.model.OrdersDto;
+import com.getir.ordersapi.model.OrderStatus;
+import com.getir.ordersapi.model.OrdersDto;
 import com.getir.ordersservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,19 +27,19 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/orders")
-public class OrdersController {
+public class OrdersController implements OrdersClient {
 
     private final OrderService orderService;
 
     @RequestMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, method = {RequestMethod.POST, RequestMethod.PUT})
-    ResponseEntity<OrdersDto> createOrder(@RequestBody @Valid OrdersDto ordersDto) {
-        log.info("Creating order new for items: {}", ordersDto.getProducts().stream().map(ProductItem::getProductId));
+    public ResponseEntity<OrdersDto> createOrder(@RequestBody @Valid OrdersDto ordersDto) {
+        log.info("Creating order new for items: {}", ordersDto.getProducts().stream().map(ProductItemDto::getProductId));
 
         return ResponseEntity.ok(orderService.createOrder(ordersDto));
     }
 
     @PatchMapping(value = "/{orderId}", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<OrdersDto> updateOrderStatus(
+    public ResponseEntity<OrdersDto> updateOrderStatus(
             @PathVariable("orderId") UUID id,
             @RequestParam("status") OrderStatus orderStatus
     ) {
@@ -47,14 +49,14 @@ public class OrdersController {
     }
 
     @GetMapping("/{orderId}")
-    ResponseEntity<OrdersDto> fetchOrder(@PathVariable("orderId") UUID id) {
+    public ResponseEntity<OrdersDto> fetchOrder(@PathVariable("orderId") UUID id) {
         log.info("Fetching order: {}", id);
 
         return ResponseEntity.ok(orderService.fetchOrder(id));
     }
 
     @DeleteMapping(value = "/{orderId}")
-    ResponseEntity<String> deleteOrder(@PathVariable("orderId") UUID id) {
+    public ResponseEntity<String> deleteOrder(@PathVariable("orderId") UUID id) {
         log.info("Deleting order: {}", id);
 
         orderService.deleteOrder(id);

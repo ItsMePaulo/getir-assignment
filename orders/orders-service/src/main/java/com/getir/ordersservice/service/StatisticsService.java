@@ -2,7 +2,7 @@ package com.getir.ordersservice.service;
 
 import com.getir.ordersservice.documents.Order;
 import com.getir.ordersservice.documents.ProductItem;
-import com.getir.ordersservice.model.StatisticsDto;
+import com.getir.ordersapi.model.StatisticsDto;
 import com.getir.ordersservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;

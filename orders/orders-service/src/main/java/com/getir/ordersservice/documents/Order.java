@@ -1,6 +1,6 @@
 package com.getir.ordersservice.documents;
 
-import com.getir.ordersservice.model.OrderStatus;
+import com.getir.ordersapi.model.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

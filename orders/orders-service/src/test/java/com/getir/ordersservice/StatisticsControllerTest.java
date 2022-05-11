@@ -2,11 +2,13 @@ package com.getir.ordersservice;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.getir.ordersapi.model.AddressDto;
+import com.getir.ordersapi.model.ProductItemDto;
 import com.getir.ordersservice.documents.Address;
 import com.getir.ordersservice.documents.ProductItem;
-import com.getir.ordersservice.model.OrderStatus;
-import com.getir.ordersservice.model.OrdersDto;
-import com.getir.ordersservice.model.StatisticsDto;
+import com.getir.ordersapi.model.OrderStatus;
+import com.getir.ordersapi.model.OrdersDto;
+import com.getir.ordersapi.model.StatisticsDto;
 import com.getir.ordersservice.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,14 +47,14 @@ public class StatisticsControllerTest {
 
     private final Supplier<OrdersDto> ordersDtoSupplier = () -> {
         var products = List.of(
-                new ProductItem("1234", 5),
-                new ProductItem("456", 1)
+                new ProductItemDto("1234", 5),
+                new ProductItemDto("456", 1)
         );
 
-        var address = new Address("hello street", 12, "world", "1233");
+        var address = new AddressDto("hello street", 12, "world", "1233");
 
         return OrdersDto.createOrderDto(
-                UUID.fromString(USER_ID),
+                UUID.fromString("66db3fc7-eb44-48cf-a955-7122992f6e65"),
                 24.9,
                 address,
                 products

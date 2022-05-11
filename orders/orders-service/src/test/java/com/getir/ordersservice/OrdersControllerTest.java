@@ -1,10 +1,12 @@
 package com.getir.ordersservice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.getir.ordersapi.model.AddressDto;
+import com.getir.ordersapi.model.ProductItemDto;
 import com.getir.ordersservice.documents.Address;
 import com.getir.ordersservice.documents.ProductItem;
-import com.getir.ordersservice.model.OrderStatus;
-import com.getir.ordersservice.model.OrdersDto;
+import com.getir.ordersapi.model.OrderStatus;
+import com.getir.ordersapi.model.OrdersDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,6 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -36,11 +39,11 @@ public class OrdersControllerTest {
 
     private final Supplier<OrdersDto> ordersDtoSupplier = () -> {
         var products = List.of(
-                new ProductItem("1234", 5),
-                new ProductItem("456", 1)
+                new ProductItemDto("1234", 5),
+                new ProductItemDto("456", 1)
         );
 
-        var address = new Address("hello street", 12, "world", "1233");
+        var address = new AddressDto("hello street", 12, "world", "1233");
 
         return OrdersDto.createOrderDto(
                 UUID.fromString("66db3fc7-eb44-48cf-a955-7122992f6e65"),
@@ -106,8 +109,9 @@ public class OrdersControllerTest {
 
         var result = mockMvc.perform(post("/orders")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(ordersDto))
-                ).andExpect(status().isOk())
+                        .content(mapper.writeValueAsString(ordersDto)))
+                .andExpect(status().isOk())
+                .andDo(print())
                 .andReturn();
 
         var orderDtoResult = mapper.readValue(result.getResponse().getContentAsString(), OrdersDto.class);

@@ -1,4 +1,4 @@
-package com.getir.ordersservice.model;
+package com.getir.ordersapi.model;
 
 import lombok.Value;
 

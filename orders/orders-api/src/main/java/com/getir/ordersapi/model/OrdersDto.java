@@ -1,7 +1,5 @@
-package com.getir.ordersservice.model;
+package com.getir.ordersapi.model;
 
-import com.getir.ordersservice.documents.Address;
-import com.getir.ordersservice.documents.ProductItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,8 +18,8 @@ public class OrdersDto {
     private Double totalPrice;
     private OrderStatus status;
 
-    private Address address;
-    private @Valid List<ProductItem> products;
+    private AddressDto address;
+    private @Valid List<ProductItemDto> products;
 
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime lastUpdatedAt = LocalDateTime.now();
@@ -29,8 +27,8 @@ public class OrdersDto {
     public static OrdersDto createOrderDto(
             UUID userId,
             Double totalPrice,
-            Address address,
-            List<ProductItem> products
+            AddressDto address,
+            List<ProductItemDto> products
     ) {
 
         var order = new OrdersDto();

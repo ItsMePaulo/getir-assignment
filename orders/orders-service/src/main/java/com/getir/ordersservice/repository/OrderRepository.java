@@ -1,7 +1,6 @@
 package com.getir.ordersservice.repository;
 
 import com.getir.ordersservice.documents.Order;
-import com.getir.ordersservice.model.OrderStatus;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

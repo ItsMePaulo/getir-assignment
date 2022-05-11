@@ -1,7 +1,7 @@
 package com.getir.ordersservice.mapper;
 
 import com.getir.ordersservice.documents.Order;
-import com.getir.ordersservice.model.OrdersDto;
+import com.getir.ordersapi.model.OrdersDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

@@ -1,6 +1,6 @@
 package com.getir.ordersservice.controller;
 
-import com.getir.ordersservice.model.StatisticsDto;
+import com.getir.ordersapi.model.StatisticsDto;
 import com.getir.ordersservice.service.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
