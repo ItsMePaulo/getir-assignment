@@ -3,12 +3,15 @@ package com.getir.bookstoreservice.controller;
 import com.getir.bookstoreservice.model.UserCartDto;
 import com.getir.bookstoreservice.model.UserCartResponseDto;
 import com.getir.bookstoreservice.service.UserCartService;
+import com.getir.ordersapi.model.AddressDto;
+import com.getir.ordersapi.model.OrdersDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +39,13 @@ public class CartController {
     ResponseEntity<UserCartResponseDto> fetchUserCart(@PathVariable("cartId") UUID cartId) {
         log.info("Fetching user cart: {}", cartId);
 
-        return ResponseEntity.ok(userCartService.fetchUserCart(cartId));
+        return ResponseEntity.ok(userCartService.fetchUserCartDto(cartId));
+    }
+
+    @PostMapping(value = "/checkout/{cartId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<OrdersDto> checkout(@PathVariable("cartId") UUID cartId, @RequestBody AddressDto addressDto) {
+        log.info("Creating order from cart for user: {}", cartId);
+
+        return ResponseEntity.ok(userCartService.checkoutCart(cartId, addressDto));
     }
 }

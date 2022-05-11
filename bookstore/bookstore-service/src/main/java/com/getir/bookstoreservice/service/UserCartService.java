@@ -2,7 +2,9 @@ package com.getir.bookstoreservice.service;
 
 import com.getir.bookstoreservice.documents.Book;
 import com.getir.bookstoreservice.documents.BookCartItem;
+import com.getir.bookstoreservice.documents.UserCart;
 import com.getir.bookstoreservice.exception.BooksOutOfStockException;
+import com.getir.bookstoreservice.exception.CouldNotCreateOrderException;
 import com.getir.bookstoreservice.exception.MissingBookException;
 import com.getir.bookstoreservice.exception.MissingCartException;
 import com.getir.bookstoreservice.mapper.UserCartMapper;
@@ -11,6 +13,8 @@ import com.getir.bookstoreservice.model.UserCartResponseDto;
 import com.getir.bookstoreservice.repository.BookRepository;
 import com.getir.bookstoreservice.repository.UserCartRepository;
 import com.getir.ordersapi.clients.OrdersClient;
+import com.getir.ordersapi.model.AddressDto;
+import com.getir.ordersapi.model.OrdersDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +60,52 @@ public class UserCartService {
         throw new BooksOutOfStockException(outOfStockBooks);
     }
 
+
+    public UserCartResponseDto fetchUserCartDto(UUID cartId) {
+        var cart = fetchUserCart(cartId);
+
+        return new UserCartResponseDto(
+                userCartMapper.mapUserCartToUserCartDto(cart),
+                checkIfStillValid(cart.getBooks())
+        );
+    }
+    public OrdersDto checkoutCart(UUID cartId, AddressDto addressDto) {
+        var cart = fetchUserCart(cartId);
+
+        if (checkIfStillValid(cart.getBooks())) {
+            try {
+                var result = ordersClient
+                        .createOrder(userCartMapper.convertUserCartResponseToOrder(cart, addressDto));
+
+                // remove books from users cart and subtract books from stock
+                clearCartItems(cart);
+                return result.getBody();
+            } catch (Exception e) {
+                throw new CouldNotCreateOrderException(e.getLocalizedMessage());
+            }
+        }
+
+        throw new BooksOutOfStockException(cart.getBooks());
+    }
+
+    private void clearCartItems(UserCart cart) {
+        cart.getBooks().forEach(bookCartItem -> {
+            var book = bookRepository.findById(bookCartItem.getBookId()).orElseThrow(() -> new MissingBookException(bookCartItem.getBookId()));
+
+            book.setStock(book.getStock() - bookCartItem.getAmount());
+            bookRepository.save(book);
+        });
+
+        cart.setBooks(List.of());
+        userCartRepository.save(cart);
+    }
+
+    private UserCart fetchUserCart(UUID cartId) {
+        return userCartRepository.findById(cartId).orElseThrow(() -> new MissingCartException(
+                cartId
+        ));
+    }
+
     private void verifyBooks(Set<String> requestedBooks, List<String> discoveredBooks) {
         for (String requestedBook : requestedBooks) {
             if (!discoveredBooks.contains(requestedBook)) {
@@ -64,22 +114,12 @@ public class UserCartService {
         }
     }
 
-    public UserCartResponseDto fetchUserCart(UUID cartId) {
-        var cart = userCartRepository.findById(cartId).orElseThrow(() -> new MissingCartException(
-                cartId
-        ));
-
-        return new UserCartResponseDto(
-                userCartMapper.mapUserCartToUserCartDto(cart),
-                checkIfStillValid(cart.getBooks())
-        );
-    }
 
     private Boolean checkIfStillValid(List<BookCartItem> books) {
-        return books.stream().noneMatch(book -> {
-            var foundBook = bookRepository.findById(book.getBookId()).orElseThrow(() -> new MissingBookException(book.getBookId()));
+        return books.stream().noneMatch(bookCartItem -> {
+            var book = bookRepository.findById(bookCartItem.getBookId()).orElseThrow(() -> new MissingBookException(bookCartItem.getBookId()));
 
-            return foundBook.getStock() < book.getAmount();
+            return book.getStock() < bookCartItem.getAmount();
         });
     }
 

@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -35,7 +37,11 @@ public class OrdersController implements OrdersClient {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<OrdersDto> createOrder(@RequestBody @Valid OrdersDto ordersDto) {
-        log.info("Creating order new for items: {}", ordersDto.getProducts().stream().map(ProductItemDto::getProductId));
+        log.info("Creating new order for items: {}",
+                new ArrayList<>(ordersDto.getProducts().stream()
+                        .map(ProductItemDto::getProductId).collect(Collectors.toList())
+                )
+        );
 
         return ResponseEntity.ok(orderService.createOrder(ordersDto));
     }
