@@ -25,6 +25,12 @@ public class OrderService {
         return ordersMapper.mapOrderToOrdersDto(order);
     }
 
+    public OrdersDto updateOrder(OrdersDto ordersDto) {
+        var order = orderRepository.save(ordersMapper.mapOrderDtoToUpdatedOrder(ordersDto));
+
+        return ordersMapper.mapOrderToOrdersDto(order);
+    }
+
     public OrdersDto updateOrderStatus(UUID id, OrderStatus orderStatus) {
         var order = fetchOrderById(id);
 

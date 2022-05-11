@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,11 +33,18 @@ public class OrdersController implements OrdersClient {
 
     private final OrderService orderService;
 
-    @RequestMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, method = {RequestMethod.POST, RequestMethod.PUT})
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<OrdersDto> createOrder(@RequestBody @Valid OrdersDto ordersDto) {
         log.info("Creating order new for items: {}", ordersDto.getProducts().stream().map(ProductItemDto::getProductId));
 
         return ResponseEntity.ok(orderService.createOrder(ordersDto));
+    }
+
+    @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<OrdersDto> updateOrder(@RequestBody @Valid OrdersDto ordersDto) {
+        log.info("Updating order new for items: {}", ordersDto.getProducts().stream().map(ProductItemDto::getProductId));
+
+        return ResponseEntity.ok(orderService.updateOrder(ordersDto));
     }
 
     @PatchMapping(value = "/{orderId}", consumes = {MediaType.APPLICATION_JSON_VALUE})

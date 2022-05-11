@@ -20,6 +20,13 @@ public interface OrdersMapper {
     })
     Order mapOrderDtoToOrder(OrdersDto ordersDto);
 
+    @Mappings({
+            @Mapping(target = "createdAt", ignore = true),
+            @Mapping(target = "lastUpdatedAt", ignore = true),
+            @Mapping(target = "status", ignore = true)
+    })
+    Order mapOrderDtoToUpdatedOrder(OrdersDto ordersDto);
+
     OrdersDto mapOrderToOrdersDto(Order order);
 
     default UUID generateId() {

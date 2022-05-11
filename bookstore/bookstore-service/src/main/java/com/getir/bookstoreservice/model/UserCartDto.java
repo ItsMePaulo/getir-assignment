@@ -17,4 +17,6 @@ public class UserCartDto {
     UUID userId;
     String username;
     @Valid List<BookCartItem> books;
+
+    Double totalPrice;
 }

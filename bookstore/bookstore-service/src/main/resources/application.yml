@@ -5,5 +5,5 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017
-      database: books
+      database: bookstore
       auto-index-creation: true

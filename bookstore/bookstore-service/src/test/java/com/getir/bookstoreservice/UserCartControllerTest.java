@@ -20,6 +20,7 @@ import java.util.function.BiFunction;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,7 +42,7 @@ public class UserCartControllerTest {
             UUID.fromString("66db3fc7-eb44-48cf-a955-7122992f6e65"), "Paul", List.of(
             new BookCartItem(BOOK_ID_1, quantity1),
             new BookCartItem(BOOK_ID_2, quantity2)
-    ));
+    ), 10 * BOOK_PRICE_1 + 4 * BOOK_PRICE_2);
 
 
     private final List<BookDto> books = List.of(
@@ -69,13 +70,14 @@ public class UserCartControllerTest {
     void shouldCreateUserCart() throws Exception {
         var cart = userCartFactory.apply(10, 4);
         var cartResponse = new UserCartResponseDto(
-                cart, true, 10 * BOOK_PRICE_1 + 4 * BOOK_PRICE_2
+                cart, true
         );
 
         mockMvc.perform(post("/carts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(cart))
                 ).andExpect(status().isOk())
+                .andDo(print())
                 .andExpect(content().json(mapper.writeValueAsString(cartResponse)));
     }
 

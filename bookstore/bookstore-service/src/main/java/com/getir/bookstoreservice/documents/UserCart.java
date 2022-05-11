@@ -16,8 +16,9 @@ import java.util.UUID;
 public class UserCart {
 
     @Id
-    UUID userId;
+    private UUID userId;
 
-    String username;
-    List<BookCartItem> books;
+    private String username;
+    private List<BookCartItem> books;
+    private Double totalPrice;
 }

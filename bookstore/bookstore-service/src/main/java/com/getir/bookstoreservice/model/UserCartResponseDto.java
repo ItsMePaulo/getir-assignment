@@ -9,5 +9,4 @@ public class UserCartResponseDto {
 
     UserCartDto userCart;
     Boolean valid;
-    Double totalPrice;
 }

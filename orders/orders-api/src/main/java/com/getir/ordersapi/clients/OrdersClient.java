@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,8 +23,11 @@ import java.util.UUID;
 @FeignClient(value = "orders", url = "${orders.url:localhost:8002/orders}", primary = false)
 public interface OrdersClient {
 
-    @RequestMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, method = {RequestMethod.POST, RequestMethod.PUT})
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<OrdersDto> createOrder(@RequestBody @Valid OrdersDto ordersDto);
+
+    @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<OrdersDto> updateOrder(@RequestBody @Valid OrdersDto ordersDto);
 
     @PatchMapping(value = "/{orderId}", consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<OrdersDto> updateOrderStatus(
