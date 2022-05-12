@@ -1,0 +1,464 @@
+{
+	"info": {
+		"_postman_id": "7eb59ca7-70b4-4da7-9132-3c5481f13d0b",
+		"name": "reading-is-good",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "bookstore",
+			"item": [
+				{
+					"name": "books",
+					"item": [
+						{
+							"name": "create-book",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "  {\n    \"isbn\": \"12345\",\n    \"title\": \"Harry Potter\",\n    \"subTitle\": \"Edition 2\",\n    \"quantity\": 50,\n    \"price\": 24.99\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{bookstore}}/books",
+									"host": [
+										"{{bookstore}}"
+									],
+									"path": [
+										"books"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create-batch-books",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n  {\n    \"isbn\": \"12345\",\n    \"title\": \"Harry Potter\",\n    \"subTitle\": \"Order of the Phoenix\",\n    \"quantity\": 50,\n    \"price\": 24.99\n  },\n  {\n    \"isbn\": \"67879\",\n    \"title\": \"The Golden Compass\",\n    \"subTitle\": \"Edition 2\",\n    \"quantity\": 30,\n    \"price\": 49.99\n  }\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{bookstore}}/books/batch",
+									"host": [
+										"{{bookstore}}"
+									],
+									"path": [
+										"books",
+										"batch"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update-book-stock",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"method\": \"ADD\",\n    \"amount\": 10\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{bookstore}}/books/{{bookId}}",
+									"host": [
+										"{{bookstore}}"
+									],
+									"path": [
+										"books",
+										"{{bookId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-all-books",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{bookstore}}/books",
+									"host": [
+										"{{bookstore}}"
+									],
+									"path": [
+										"books"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-book",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{bookstore}}/books/{{bookId}}",
+									"host": [
+										"{{bookstore}}"
+									],
+									"path": [
+										"books",
+										"{{bookId}}"
+									],
+									"query": [
+										{
+											"key": "bookId",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete-book",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{bookstore}}/books/{{bookId}}",
+									"host": [
+										"{{bookstore}}"
+									],
+									"path": [
+										"books",
+										"{{bookId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "cart",
+					"item": [
+						{
+							"name": "create-cart",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userId\": \"66db3fc7-eb44-48cf-a955-7122992f6e65\",\n  \"username\": \"Paul\",\n  \"books\": [\n    {\n      \"bookId\": \"12345\",\n      \"amount\": 10\n    },\n    {\n      \"bookId\": \"67879\",\n      \"amount\": 4\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{bookstore}}/carts",
+									"host": [
+										"{{bookstore}}"
+									],
+									"path": [
+										"carts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-cart",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{bookstore}}/carts/{{cartId}}",
+									"host": [
+										"{{bookstore}}"
+									],
+									"path": [
+										"carts",
+										"{{cartId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "checkout",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"street\": \"hello street\",\n  \"houseNumber\": 12,\n  \"city\": \"world\",\n  \"postalCode\": \"1233\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{bookstore}}/carts/{{cartId}}",
+									"host": [
+										"{{bookstore}}"
+									],
+									"path": [
+										"carts",
+										"{{cartId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "orders",
+					"item": [
+						{
+							"name": "create-order",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userId\": \"66db3fc7-eb44-48cf-a955-7122992f6e65\",\n  \"totalPrice\": 24.9,\n  \"address\": {\n    \"street\": \"hello street\",\n    \"houseNumber\": 12,\n    \"city\": \"world\",\n    \"postalCode\": \"1233\"\n  },\n  \"products\": [\n    {\n      \"productId\": \"1234\",\n      \"amount\": 5\n    },\n    {\n      \"productId\": \"456\",\n      \"amount\": 1\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{orders}}/orders",
+									"host": [
+										"{{orders}}"
+									],
+									"path": [
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update-order",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userId\": \"66db3fc7-eb44-48cf-a955-7122992f6e65\",\n  \"totalPrice\": 24.9,\n  \"address\": {\n    \"street\": \"hello street\",\n    \"houseNumber\": 12,\n    \"city\": \"world\",\n    \"postalCode\": \"1233\"\n  },\n  \"products\": [\n    {\n      \"productId\": \"1234\",\n      \"amount\": 5\n    },\n    {\n      \"productId\": \"456\",\n      \"amount\": 1\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{orders}}/orders",
+									"host": [
+										"{{orders}}"
+									],
+									"path": [
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update-order-status",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{orders}}/orders/{{orderID}}?status=DELIVERED",
+									"host": [
+										"{{orders}}"
+									],
+									"path": [
+										"orders",
+										"{{orderID}}"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "DELIVERED"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-orders",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{orders}}/orders",
+									"host": [
+										"{{orders}}"
+									],
+									"path": [
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-orders",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{orders}}/orders/{{orderID}}",
+									"host": [
+										"{{orders}}"
+									],
+									"path": [
+										"orders",
+										"{{orderID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete-order",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{orders}}/orders/{{orderID}}",
+									"host": [
+										"{{orders}}"
+									],
+									"path": [
+										"orders",
+										"{{orderID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "statistics",
+					"item": [
+						{
+							"name": "global-statistics",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{orders}}/statistics",
+									"host": [
+										"{{orders}}"
+									],
+									"path": [
+										"statistics"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "user-statistics",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{orders}}/statistics/{{userId}}",
+									"host": [
+										"{{orders}}"
+									],
+									"path": [
+										"statistics",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "create-user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"Paul\",\n  \"password\": \"password123\",\n  \"email\": \"test@email.com\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "bookId",
+			"value": "12345"
+		},
+		{
+			"key": "cartId",
+			"value": "66db3fc7-eb44-48cf-a955-7122992f6e65"
+		},
+		{
+			"key": "orderID",
+			"value": "097a3347-3d97-44fe-a6fd-477d9ed299c7"
+		},
+		{
+			"key": "orderStatus",
+			"value": "DELIVERED"
+		},
+		{
+			"key": "userId",
+			"value": "66db3fc7-eb44-48cf-a955-7122992f6e65"
+		}
+	]
+}
