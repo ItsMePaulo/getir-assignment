@@ -1,7 +1,7 @@
 # Reading is Good
 
-An online book marketplace, which manages the state of books as the enter a warehouse and 
-move through orders. 
+An online book marketplace, which manages the state of books going through a warehouse and through the Order 
+process.
 
 ## Running the App
 
