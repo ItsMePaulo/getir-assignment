@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -61,6 +62,13 @@ public class OrdersController implements OrdersClient {
         log.info("Updating status of order: {} to {}", id, orderStatus);
 
         return ResponseEntity.ok(orderService.updateOrderStatus(id, orderStatus));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<OrdersDto>> fetchAllOrders() {
+        log.info("Fetching all orders");
+
+        return ResponseEntity.ok(orderService.fetchAllOrders());
     }
 
     @GetMapping("/{orderId}")

@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BookStockDto {
 
-    BookStockMethod method;
-    Integer amount;
+    private BookStockMethod method;
+    private Integer amount;
 
     public Integer performMappingMethod(Integer stock) {
         return method.performOperation(amount, stock);

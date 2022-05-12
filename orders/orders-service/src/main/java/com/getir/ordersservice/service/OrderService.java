@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -39,6 +40,10 @@ public class OrderService {
         var newOrder = orderRepository.save(order);
 
         return ordersMapper.mapOrderToOrdersDto(newOrder);
+    }
+
+    public List<OrdersDto> fetchAllOrders() {
+        return ordersMapper.mapAllOrdersToDtos(orderRepository.findAll());
     }
 
     public OrdersDto fetchOrder(UUID id) {

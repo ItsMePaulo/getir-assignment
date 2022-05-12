@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import java.util.List;
 import java.util.UUID;
 
 @Mapper(componentModel = "spring")
@@ -26,6 +27,8 @@ public interface OrdersMapper {
             @Mapping(target = "status", ignore = true)
     })
     Order mapOrderDtoToUpdatedOrder(OrdersDto ordersDto);
+
+    List<OrdersDto> mapAllOrdersToDtos(List<Order> orders);
 
     OrdersDto mapOrderToOrdersDto(Order order);
 
