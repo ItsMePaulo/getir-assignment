@@ -103,7 +103,7 @@ from one state to another, emitting events as the order goes through.
 
 The following diagram shows the Tables defined in the Orders
 
-![img.png](images/entites-bookstore.png)
+![img.png](images/entities-orders.png)
 
 ## Running the Test
 
